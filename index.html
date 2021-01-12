@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <div v-for="product in product">
+            <h1> {{ product.topic }} </h1>
+        </div>
+        
+    </div>
+    <script >
+        let store = new Vue({
+            el: '#app',
+            data: { 
+                product:[]
+                     
+              },
+            created: function () {
+               
+                const url = "http://localhost:3000/lessons.md";
+                fetch(url).then(
+                    function (response) {
+                        response.json().then(
+                            function (json) {
+                                console.log(json);
+                                store.product = JSON.stringify(json);
+                            });
+                    })
+            }
+        });
+    </script>
+
+</body>
+
+</html>
