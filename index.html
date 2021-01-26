@@ -6,38 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://unpkg.com/vue"></script>
+    <link rel="Stylesheet" href="Stylesheet.css">
+    
 </head>
 
 <body>
 
-    <div id="app">
-        <div v-for="product in product">
-            <h1> {{ product.topic }} </h1>
+    <div id="app" class="flex-container">
+        <div class="product" v-for="product in products">
+            <li> Topic: {{product.topic}} </li>
+            <li> Location: {{product.location}} </li>
+            <li> Price: {{product.price}} </li>
         </div>
         
     </div>
-    <script >
+    <script>
         let store = new Vue({
             el: '#app',
-            data: { 
-                product:[]
-                     
-              },
-            created: function () {
-               
-                const url = "http://localhost:3000";
-                fetch(url).then(
-                    function (response) {
-                        response.json().then(
-                            function (json) {
-                                console.log(json);
-                                store.product = JSON.stringify(json);
-                            });
-                    })
-            }
-        });
-    </script>
+            data: {
+                products: {}},
+            created: function(){
+            fetch('http://localhost:3000').then(
+                function (response) {
+                    response.json().then(
+                        function (json) {
+                            
+                            store.products =  json;
+                            
+                            
+                        });
+                })
+            
+        }
+    })
+        
 
+
+    </script>
+    
 </body>
 
 </html>

@@ -1,25 +1,33 @@
+const { response } = require("express");
 var express = require("express");
 var app = express();
 var path = require("path");
 
-app.get("/lessons", function(request,response){
-    response.send("Welcome to lessons page!");
+var lessons = [
+    {topic : 'math', location : 'London', price : 100 },
+    {topic : 'math', location : 'Livepool', price : 80},
+    {topic : 'math', location : 'Oxford', price : 90 },
+    {topic : 'math', location : 'Bristol', price : 120 }
+]
+
+
+
+app.get('/lessons', function(request, response){
+    response.send(lessons); 
 });
-app.get("/user", function(request,response){
-    response.send("Welcome to users page!");
+app.get('/users/userid', function(request, response){
+    response.send("{ ’ email ’ : ’ user@email . com ’ , ’ password ’ : ’ mypassword ’ }");
 });
 
-var apiRouter = require("./routes/api_router");
-app.use("/api", apiRouter);
+//var publicPath = path.resolve(__dirname, "");
+//app.use(express.static(publicPath));
 
-var publicPath = path.resolve(__dirname, "public");
-app.use(express.static(publicPath));
 
 
 app.use( function (request, response) {
-        response.setHeader('Access-Control-Allow-Origin', '*');
-        response.send("Hello from the server");
-    });
+    response.setHeader('Access-Control-Allow-Origin', '*');
+    response.send(lessons);
+});
 
-//Listen on port 300 for local host server
+
 app.listen(3000);
